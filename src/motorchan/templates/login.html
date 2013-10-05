@@ -1,20 +1,25 @@
 {% extends "base.html" %}
 
+    {% block extra_css %}
+    <link href="../static/css/signin.css" rel="stylesheet">
+    {% end %}
+
     {% block content %}
-    <form action="/login" method="post">
-      {{ form.username.label.text }}: {{form.username}}
+    <form action="/login" method="post" class="form-signin">
+      {{ form.username.label.text }}:
+      {{form.username(placeholder="login", Class='form-control')}}
       {% if form.username.errors %}
         {% for error in form.username.errors %}
           {{ error }}
         {% end %}
       {% end %}
-      {{ form.password.label.text }}: {{form.password}}
+      {{ form.password.label.text }}: {{form.password(Class='form-control', placeholder='password')}}
       {% if form.password.errors %}
         {% for error in form.password.errors %}
           {{ error }}
         {% end %}
       {% end %}
-      <input type="submit" value="Войти">
+      <input class="btn btn-lg btn-primary btn-block" type="submit" value="Войти">
       {% if errors %}
       <b>{{ errors }}</b>
       {% end %}
