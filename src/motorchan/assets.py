@@ -8,8 +8,10 @@ js = Bundle(
     'js/app.coffee',
     'js/routes.coffee',
     'js/controllers/board_list.coffee',
+    'js/controllers/board.coffee',
     'js/services/board.coffee',
-    filters='coffeescript',
+    'js/services/thread.coffee',
+    filters='coffeescript, jsmin',
     output='compiled/main.js'
 )
 
