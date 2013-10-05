@@ -20,12 +20,14 @@
     {% block extra_js %}{% end %}
   </head>
   <body>
+    <div class="container">
     {% if current_user is not None %}
-    <div>{{ current_user }}</div>
-    <a href='/logout'>Выйти</a>
+      <div>{{ current_user }}</div>
+      <a href='/logout'>Выйти</a>
     {% end %}
     <h1>MOTORCHAN</h1>
     <h2>Добро пожаловать. Снова.</h2>
     {% block content %}{% end %}
+    </div>
   </body>
 </html>
