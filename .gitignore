@@ -36,3 +36,5 @@ nosetests.xml
 .pydevproject
 /tornado/
 *~
+/src/motorchan/static/.webassets-cache
+/src/motorchan/static/compiled/*

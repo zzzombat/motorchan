@@ -7,6 +7,8 @@ requires = [
     'motor',
     'wtforms',
     'tornadotools', # require libcurl4-openssl-dev
+    'webassets',
+    'jsmin'
 ]
 
 setup(
