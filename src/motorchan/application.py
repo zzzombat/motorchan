@@ -32,6 +32,7 @@ class Application(tornado.web.Application):
             tornado.web.url(r"/", handler.MainApplicationHandler, name='main'),
             tornado.web.url(r"/api/board", handler.api.BoardAPIHandler, name='api_board'),
             tornado.web.url(r"/login", auth.LoginHandler, name='login'),
+            tornado.web.url(r"/logout", auth.LogoutHandler, name='logout'),
         ]
 
         db_client = motor.MotorClient(options.dburl).open_sync()
@@ -43,6 +44,7 @@ class Application(tornado.web.Application):
             static_url_prefix=options.static_url,
             xsrf_cookies=True,
             cookie_secret="11zKXQAGgE||22mGeJJFuYasdh11237EQnp2XdTP1o/Vo=",
+            login_url='/login',
             autoescape=None,
             db=db_client[options.dbname],
         )
