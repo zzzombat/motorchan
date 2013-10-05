@@ -1,5 +1,6 @@
 
 import os
+import os.path
 import logging
 
 import motor
@@ -12,12 +13,17 @@ from tornado.options import define, options
 import handler
 from handler import auth
 
+PROJECT_ROOT = os.path.dirname(__file__)
 logger = logging.getLogger(__name__)
 
 define("port", default=8888, help="run on the given port", type=int)
 define("host", default='0.0.0.0', help="run on the given host", type=str)
 define("dburl", default='mongodb://localhost:27017')
 define("dbname", default='motorchan')
+define("debug", default=True, help="server debug mode", type=bool)
+define("static_url", default="/static/", help="Static url prefix", type=str)
+define("static_root", default=os.path.join(PROJECT_ROOT, "static"), help="Static files root", type=str)
+
 
 class Application(tornado.web.Application):
     def __init__(self, db_connection=None, xsrf_cookies=True):
@@ -29,20 +35,24 @@ class Application(tornado.web.Application):
             tornado.web.url(r"/api/thread/", handler.api.ThreadAPIHandler, name='api_thread'),
             # tornado.web.url(r"/api/thread/(\d+)/reply", handler.api.ReplyAPIHandler, name='api_reply'),
             tornado.web.url(r"/login", auth.LoginHandler, name='login'),
+            tornado.web.url(r"/logout", auth.LogoutHandler, name='logout'),
         ]
 
         db_client = motor.MotorClient(options.dburl).open_sync()
 
         settings = dict(
-            debug=True,
-            template_path=os.path.join(os.path.dirname(__file__), "templates"),
-            static_path=os.path.join(os.path.dirname(__file__), "static"),
+            debug=options.debug,
+            template_path=os.path.join(PROJECT_ROOT, "templates"),
+            static_path=options.static_root,
+            static_url_prefix=options.static_url,
             xsrf_cookies=xsrf_cookies,
             cookie_secret="11zKXQAGgE||22mGeJJFuYasdh11237EQnp2XdTP1o/Vo=",
+            login_url='/login',
             autoescape=None,
             db=db_connection or db_client[options.dbname],
         )
-        super(Application,self).__init__(handlers, **settings)
+        super(Application, self).__init__(handlers, **settings)
+
 
 def run():
     logging.basicConfig(level=logging.DEBUG)

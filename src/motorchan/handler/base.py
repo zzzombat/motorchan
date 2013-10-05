@@ -1,6 +1,6 @@
 
 import json
-import tornado.web
+import tornado
 
 class BaseHandler(tornado.web.RequestHandler):
     def prepare(self):
@@ -11,3 +11,5 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return self.get_secure_cookie("user")
 
+    def get_user_locale(self):
+        return tornado.locale.get('ru')
