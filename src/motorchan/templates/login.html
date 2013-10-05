@@ -2,8 +2,12 @@
 
     {% block content %}
     <form action="/login" method="post">
-      Name: <input type="text" name="username">
-      <input type="submit" value="Sign in">
+      Логин: <input type="text" name="username">
+      Пароль: <input type="password" name="password">
+      <input type="submit" value="Войти">
+      {% if errors %}
+      <b>{{ errors }}</b>
+      {% end %}
       {% raw xsrf_form_html() %}
     </form>
     {% end %}
