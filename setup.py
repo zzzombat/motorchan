@@ -5,6 +5,8 @@ import os, sys
 requires = [
     'tornado',
     'motor',
+    'webassets',
+    'jsmin'
 ]
 
 setup(
