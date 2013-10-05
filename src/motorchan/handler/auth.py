@@ -25,8 +25,8 @@ class LoginHandler(BaseHandler):
 
 
 class LogoutHandler(BaseHandler):
-    @tornado.web.authenticated
     def get(self):
         if self.current_user is not None:
             self.clear_cookie('user')
-            self.redirect("/")
+
+        self.redirect("/")
