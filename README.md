@@ -1,4 +1,0 @@
-motorchan
-=========
-
-New generation imageboard
