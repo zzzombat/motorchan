@@ -2,7 +2,9 @@
   Досочки досочки
   <ul>
     <li data-ng-repeat="board in boards.data">
-      {{ board.slug }} - {{ board.name }}
+      <a href="#/{{board.slug}}/">
+        /{{ board.slug }}/ - {{ board.name }}
+      </a>
     </li>
   </ul>
 </div>
