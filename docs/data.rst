@@ -46,6 +46,11 @@ Objects
 Collections
 -----------
 
+::
+
    users: [User, User, ...]
+
    threads: [Thread, Thread, ...]
+
+   boards: [Board, Board, ...]
 
