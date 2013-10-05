@@ -1,4 +1,7 @@
+
+import api
 from base import BaseHandler
+
 
 class MainApplicationHandler(BaseHandler):
 
