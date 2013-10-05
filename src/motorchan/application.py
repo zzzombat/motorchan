@@ -13,7 +13,7 @@ import handler
 logger = logging.getLogger(__name__)
 
 define("port", default=8888, help="run on the given port", type=int)
-define("host", default='0.0.0.0', help="run on the given port", type=int)
+define("host", default='0.0.0.0', help="run on the given host", type=str)
 
 class Application(tornado.web.Application):
     def __init__(self):

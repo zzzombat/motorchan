@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 import os, sys
-sys.path.insert(0, 'src')
-import motorchan
 
 requires = [
     'tornado',
@@ -10,7 +8,7 @@ requires = [
 
 setup(
     name='motorchan',
-    version=motorchan.__version__,
+    version='0.1',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     include_package_data=True,
