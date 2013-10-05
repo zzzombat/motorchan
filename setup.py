@@ -6,6 +6,7 @@ import motorchan
 
 requires = [
     'tornado',
+    'motor',
 ]
 
 setup(
