@@ -4,6 +4,7 @@ import os, sys
 
 requires = [
     'tornado',
+    'motor',
 ]
 
 setup(
