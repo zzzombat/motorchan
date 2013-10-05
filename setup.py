@@ -18,6 +18,7 @@ setup(
     entry_points={
         'console_scripts': [
             'motorchan = motorchan:run',
+            'motorchan-initdb = motorchan.initdb:main',
         ],
     },
 )
