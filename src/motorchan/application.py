@@ -1,3 +1,4 @@
+
 import os
 import logging
 
@@ -19,12 +20,14 @@ define("dburl", default='mongodb://localhost:27017')
 define("dbname", default='motorchan')
 
 class Application(tornado.web.Application):
-    def __init__(self):
+    def __init__(self, db_connection=None, xsrf_cookies=True):
 
         logger.info("Starting application on %s:%s", options.host, options.port)
         handlers = [
             tornado.web.url(r"/", handler.MainApplicationHandler, name='main'),
-            tornado.web.url(r"/api/board", handler.api.BoardAPIHandler, name='api_board'),
+            tornado.web.url(r"/api/board/", handler.api.BoardAPIHandler, name='api_board'),
+            tornado.web.url(r"/api/thread/", handler.api.ThreadAPIHandler, name='api_thread'),
+            # tornado.web.url(r"/api/thread/(\d+)/reply", handler.api.ReplyAPIHandler, name='api_reply'),
             tornado.web.url(r"/login", auth.LoginHandler, name='login'),
         ]
 
@@ -34,10 +37,10 @@ class Application(tornado.web.Application):
             debug=True,
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
-            xsrf_cookies=True,
+            xsrf_cookies=xsrf_cookies,
             cookie_secret="11zKXQAGgE||22mGeJJFuYasdh11237EQnp2XdTP1o/Vo=",
             autoescape=None,
-            db=db_client[options.dbname],
+            db=db_connection or db_client[options.dbname],
         )
         super(Application,self).__init__(handlers, **settings)
 

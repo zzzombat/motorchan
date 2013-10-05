@@ -21,4 +21,5 @@ setup(
             'motorchan-initdb = motorchan.initdb:main',
         ],
     },
+    test_suite='tests',
 )
