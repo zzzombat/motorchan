@@ -5,6 +5,8 @@ import os, sys
 requires = [
     'tornado',
     'motor',
+    'wtforms',
+    'tornadotools', # require libcurl4-openssl-dev
     'webassets',
     'jsmin'
 ]
