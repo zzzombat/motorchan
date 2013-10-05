@@ -1,4 +1,3 @@
-
 import os
 import logging
 
@@ -9,6 +8,7 @@ import tornado.web
 from tornado.options import define, options
 
 import handler
+from handler import auth
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +20,7 @@ class Application(tornado.web.Application):
         logger.info("Starting application on %s:%s", options.host, options.port)
         handlers = [
             tornado.web.url(r"/", handler.MainApplicationHandler, name='main'),
+            tornado.web.url(r"/login", auth.LoginHandler, name='login')
         ]
 
         settings = dict(
@@ -28,7 +29,6 @@ class Application(tornado.web.Application):
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             xsrf_cookies=True,
             cookie_secret="11zKXQAGgE||22mGeJJFuYasdh11237EQnp2XdTP1o/Vo=",
-            login_url="/auth/login",
             autoescape=None,
         )
         super(Application,self).__init__(handlers, **settings)
