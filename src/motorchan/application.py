@@ -22,23 +22,31 @@ define("dburl", default='mongodb://localhost:27017')
 define("dbname", default='motorchan')
 define("debug", default=True, help="server debug mode", type=bool)
 define("static_url", default="/static/", help="Static url prefix", type=str)
-define("static_root", default=os.path.join(PROJECT_ROOT, "static"), help="Static files root", type=str)
+define("static_root", default=os.path.join(PROJECT_ROOT, "static"),
+       help="Static files root", type=str)
 
 
 class Application(tornado.web.Application):
-    def __init__(self, db_connection=None, xsrf_cookies=True):
 
+    def setup_database(self, sync_db):
+        sync_db.boards.ensure_index('slug', unique=True)
+
+    def __init__(self, db=None, xsrf_cookies=True):
         logger.info("Starting application on %s:%s", options.host, options.port)
+
         handlers = [
             tornado.web.url(r"/", handler.MainApplicationHandler, name='main'),
-            tornado.web.url(r"/api/board/", handler.api.BoardAPIHandler, name='api_board'),
-            tornado.web.url(r"/api/thread/", handler.api.ThreadAPIHandler, name='api_thread'),
-            # tornado.web.url(r"/api/thread/(\d+)/reply", handler.api.ReplyAPIHandler, name='api_reply'),
-            tornado.web.url(r"/login", auth.LoginHandler, name='login'),
-            tornado.web.url(r"/logout", auth.LogoutHandler, name='logout'),
+            tornado.web.url(r"/api/board[/]?", handler.api.BoardAPIHandler, name='api_board'),
+            tornado.web.url(r"/api/thread[/]?", handler.api.ThreadAPIHandler, name='api_thread'),
+            tornado.web.url(r"/api/thread/([\da-f]+)[/]?$", handler.api.ThreadItemAPIHandler, name='api_thread_item'),
+            tornado.web.url(r"/login[/]?", auth.LoginHandler, name='login'),
+            tornado.web.url(r"/logout[/]?", auth.LogoutHandler, name='logout'),
         ]
 
-        db_client = motor.MotorClient(options.dburl).open_sync()
+        if not db:
+            db = motor.MotorClient(options.dburl).open_sync()[options.dbname]
+
+        self.setup_database(db.connection.sync_client()[db.name])
 
         settings = dict(
             debug=options.debug,
@@ -49,7 +57,7 @@ class Application(tornado.web.Application):
             cookie_secret="11zKXQAGgE||22mGeJJFuYasdh11237EQnp2XdTP1o/Vo=",
             login_url='/login',
             autoescape=None,
-            db=db_connection or db_client[options.dbname],
+            db=db,
         )
         super(Application, self).__init__(handlers, **settings)
 

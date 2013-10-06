@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
-import os, sys
 
 requires = [
     'tornado',
     'motor',
     'wtforms',
-    'tornadotools', # require libcurl4-openssl-dev
+    'tornadotools',  # require libcurl4-openssl-dev
+    'tornado-utils',
     'webassets',
-    'jsmin'
+    'jsmin',
+    'jsonschema',
+    'python-dateutil',
 ]
 
 setup(

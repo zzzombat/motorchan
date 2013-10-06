@@ -1,3 +1,3 @@
 
 from board import BoardAPIHandler
-from thread_ import ThreadAPIHandler
+from thread_ import ThreadAPIHandler, ThreadItemAPIHandler
