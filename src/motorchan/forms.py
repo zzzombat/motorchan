@@ -25,3 +25,6 @@ class PostForm(forms.Form):
 
 class ThreadForm(PostForm):
     image = fields.FileField(u'Изображение', [required_validator])
+
+class TestForm(PostForm):
+    pass

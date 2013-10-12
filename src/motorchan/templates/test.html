@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+    {% block extra_css %}
+    <link href="../static/css/signin.css" rel="stylesheet">
+    {% end %}
+    
+    {% block content %}
+    <form action="/test" method="post" class="form-signin">
+      {{ form.image.label.text }}:
+      {{form.image(placeholder="file", Class='form-control')}}
+      {% if form.image.errors %}
+        {% for error in form.image.errors %}
+          {{ error }}
+        {% end %}
+      {% end %}
+      <input class="btn btn-lg btn-primary btn-block" type="submit" value="Отправить">
+      {% if errors %}
+      <b>{{ errors }}</b>
+      {% end %}
+      {% raw xsrf_form_html() %}
+    </form>
+
+    {% end %}

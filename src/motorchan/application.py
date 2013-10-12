@@ -11,7 +11,7 @@ import tornado.web
 from tornado.options import define, options
 
 import handler
-from handler import auth
+from handler import auth, test
 
 PROJECT_ROOT = os.path.dirname(__file__)
 logger = logging.getLogger(__name__)
@@ -41,6 +41,7 @@ class Application(tornado.web.Application):
             tornado.web.url(r"/api/thread/([\da-f]+)[/]?$", handler.api.ThreadItemAPIHandler, name='api_thread_item'),
             tornado.web.url(r"/login[/]?", auth.LoginHandler, name='login'),
             tornado.web.url(r"/logout[/]?", auth.LogoutHandler, name='logout'),
+            tornado.web.url(r"/test[/]?", test.TestHandler, name='test'),
         ]
 
         if not db:
