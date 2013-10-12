@@ -5,7 +5,7 @@
     {% end %}
     
     {% block content %}
-    <form action="/test" method="post" class="form-signin">
+    <form enctype="multipart/form-data" action="/test" method="post" class="form-signin">
       {{ form.image.label.text }}:
       {{form.image(placeholder="file", Class='form-control')}}
       {% if form.image.errors %}
